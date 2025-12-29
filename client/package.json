@@ -1,0 +1,14 @@
+{
+  "name": "watch-together-client",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite"
+  },
+  "dependencies": {
+    "socket.io-client": "^4.7.5"
+  },
+  "devDependencies": {
+    "vite": "^5.2.0"
+  }
+}

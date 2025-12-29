@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>Watch Together</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #0f0f0f;
+      color: white;
+      margin: 0;
+      padding: 20px;
+    }
+    video, iframe {
+      width: 100%;
+      max-height: 80vh;
+      background: black;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Совместный просмотр</h2>
+
+  <input id="url" placeholder="Вставь ссылку на видео и нажми Enter" />
+
+  <div id="player"></div>
+
+  <script type="module" src="/main.js"></script>
+</body>
+</html>
