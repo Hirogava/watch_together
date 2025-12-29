@@ -11,6 +11,7 @@ let state = {
   time: 0,
   playing: false
 };
+let isRemoteSync = false;
 
 socket.emit("join", roomId);
 
@@ -77,6 +78,8 @@ function extractYouTubeId(url) {
 }
 
 function sendSync() {
+  if (isRemoteSync) return;
+
   state.time = video.currentTime;
   state.playing = !video.paused;
   socket.emit("sync", { roomId, state });
@@ -84,6 +87,22 @@ function sendSync() {
 
 function syncVideo() {
   if (!video) return;
-  video.currentTime = state.time;
-  state.playing ? video.play() : video.pause();
+
+  isRemoteSync = true;
+
+  if (Math.abs(video.currentTime - state.time) > 0.5) {
+    video.currentTime = state.time;
+  }
+
+  if (state.playing && video.paused) {
+    video.play();
+  }
+
+  if (!state.playing && !video.paused) {
+    video.pause();
+  }
+
+  setTimeout(() => {
+    isRemoteSync = false;
+  }, 100);
 }
