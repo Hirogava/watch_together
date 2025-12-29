@@ -1,6 +1,6 @@
 import { io } from "socket.io-client";
 
-const socket = io("http://localhost:3001");
+const socket = io("https://watch-together-server.onrender.com");
 const roomId = location.hash.slice(1) || crypto.randomUUID();
 location.hash = roomId;
 
