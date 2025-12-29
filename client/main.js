@@ -1,5 +1,3 @@
-import { io } from "socket.io-client";
-
 const socket = io("https://watch-together-4yot.onrender.com");
 const roomId = location.hash.slice(1) || crypto.randomUUID();
 location.hash = roomId;
