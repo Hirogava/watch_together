@@ -26,6 +26,12 @@ io.on("connection", socket => {
     socket.emit("state", rooms[roomId]);
   });
 
+  socket.on("state", s => {
+    state = s;
+    urlInput.value = state.url;
+    loadVideo();
+    });
+
   socket.on("sync", ({ roomId, state }) => {
     rooms[roomId] = state;
     socket.to(roomId).emit("sync", state);
