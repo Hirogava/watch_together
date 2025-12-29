@@ -1,6 +1,6 @@
 const socket = io("https://watch-together-4yot.onrender.com");
-const roomId = location.hash.slice(1) || crypto.randomUUID();
-location.hash = roomId;
+const roomId = "1";
+
 
 const urlInput = document.getElementById("url");
 const player = document.getElementById("player");
@@ -39,15 +39,24 @@ function loadVideo() {
 
   if (!state.url) return;
 
+  // YouTube
   if (state.url.includes("youtube.com") || state.url.includes("youtu.be")) {
+    const videoId = extractYouTubeId(state.url);
+    if (!videoId) return;
+
     const iframe = document.createElement("iframe");
-    iframe.src = state.url.replace("watch?v=", "embed/");
-    iframe.allow = "autoplay";
+    iframe.width = "100%";
+    iframe.height = "500";
+    iframe.src = `https://www.youtube.com/embed/${videoId}?enablejsapi=1&autoplay=0`;
+    iframe.allow =
+      "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
     iframe.allowFullscreen = true;
+
     player.appendChild(iframe);
     return;
   }
 
+  // Обычное видео
   video = document.createElement("video");
   video.src = state.url;
   video.controls = true;
@@ -58,6 +67,13 @@ function loadVideo() {
 
   player.appendChild(video);
   syncVideo();
+}
+
+function extractYouTubeId(url) {
+  const reg =
+    /(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
+  const match = url.match(reg);
+  return match ? match[1] : null;
 }
 
 function sendSync() {
